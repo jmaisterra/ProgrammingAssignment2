@@ -15,7 +15,10 @@ makeCacheMatrix <- function(x = matrix()) {
             minv <<- NULL
       }
       get <- function() x                                 ## get the Matrix to compute its Inverse
-      setinverse <- function(inverse) minv <<- inverse    ## set de Inverse to the cache value
+      setinverse <- function(inverse, x) {
+            minv <<- inverse                             ## set de Inverse to the cache value
+            cmat <<- x                                   ## set de Computad Matrix de the cache value
+      }
       getinverse <- function() minv                       ## get the Inverse valua from the cache variable
       getlastmatrix <- function() cmat                    ## get the Last Matrix used to compute the inverseInverse valua variable
       list(set = set, get = get,
@@ -28,12 +31,13 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
       minv <- x$getinverse()
-      if(!is.null(minv) || identical()) {
+      cmat <- x$getlastmatrix()
+      if( (!is.null(cmat) && (!is.null(minv)) && identical(camt, x) = TRUE) {
             message("getting cached data")
-            return(m)
+            return(minv)
       }
       vmatrixdata <- x$get()
-      m <- solve(vmatrix)
-      x$setmean(m)
-      m
+      minv <- solve(vmatrix)
+      x$setinverse(minv, x)
+      minv
 }
